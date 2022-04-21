@@ -15,20 +15,31 @@ import ReactDOM from "react-dom";
 // };
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state;
-  }
-  render() {
+  state = { lat: null, errorMessage: "" };
+
+  componentDidMount() {
+    // this.state.lat = 2;
     navigator.geolocation.getCurrentPosition(
-      function (pos) {
-        console.log(pos);
+      (position) => {
+        this.state.lat = position.coords.latitude;
+        console.log(position);
       },
-      function (err) {
-        console.log(err);
+      (err) => {
+        this.state.errorMessage = err.message;
       }
     );
-    return <div>Hello World</div>;
+  }
+
+  render() {
+    // console.log(this.state.lat);
+    // console.log(this.state.errorMessage);
+
+    return (
+      <div>
+        <div>Latitude:{this.state.lat}</div>
+        <div>Error:{this.state.errorMessage}</div>
+      </div>
+    );
   }
 }
 
